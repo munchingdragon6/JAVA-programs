@@ -1,0 +1,57 @@
+import java.util.*;
+public class weakGoldbachConjecture
+{
+    int N;int h; 
+    ArrayList<Integer> prime = new ArrayList<>(); 
+    weakGoldbachConjecture(int a) //initialisation
+    {
+        N=a; h=0;   
+    }
+    
+    boolean isPrime(int n) //checks for prime no, returns boolean 
+    {
+        int c=0;
+        for(int i=1;i<=n;i++)   if(n%i==0) c++;
+        if(c==2) return true; else return false;
+    }
+    
+    void primeNo() //adds all primes numbers from 2 to N in ArrayList prime
+    {
+        int a = N; int i;
+        for(i=2;i<=N;i++)
+            if(isPrime(i)) prime.add(i);
+    }
+    
+    void printPrimeList() //prints ArrayList prime
+    {
+        for(int i=0;i<prime.size();i++)
+            System.out.print(prime.get(i)+" , ");
+    }
+    
+    void output() 
+    {
+        int i,j,k;
+        for(i=0;i<prime.size();i++)
+            for(j=0;j<prime.size();j++)
+                for(k=0;k<prime.size();k++) 
+                    if((prime.get(i)+prime.get(j)+prime.get(k)==N) && prime.get(j)<prime.get(k))  //condition to exclude repetition of combinations uses the principle that the first instance of any combination will always be in ascending order
+                    {
+                        System.out.println(prime.get(i)+" + "+prime.get(j)+" + "+prime.get(k));
+                        h++; 
+                    }   
+        System.out.println("number of combinations = " +h);
+    }
+    
+    void main()
+    {
+        weakGoldbachConjecture ob = new weakGoldbachConjecture(N);
+        if(N>5 && N%2==1)
+        {
+            System.out.println("NUMBER IS : "+N);
+            ob.primeNo(); 
+            ob.printPrimeList(); 
+            ob.output(); 
+        }
+        else System.out.println("Conditions not satisfied: try again");
+    }
+}
