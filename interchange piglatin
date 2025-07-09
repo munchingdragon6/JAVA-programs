@@ -1,0 +1,62 @@
+import java.util.*;
+class interchange_piglatin
+{
+    String interchange(String st) //interchanges the longest and shortest word
+    {
+        StringTokenizer ob = new StringTokenizer(st);
+        int c= ob.countTokens();
+        String a[] = new String[c];
+        int i,n; //i=loop var, n=to store length of current word
+        int g,s,x,y; //g,s= to compare length, x,y= to store index
+        String wd="";
+        for(i=0;i<c;i++){
+            wd=ob.nextToken(); a[i]=wd; //stores st in a
+        }
+        
+        g=s=a[0].length(); x=y=0; //initialisation
+        for(i=0;i<c;i++){ //makes comparison and stores values
+            n=a[i].length();
+            if(n>g) {g=n;x=i;}
+            if(n<s) {s=n;y=i;}
+        }
+        
+        //interchanging words: 
+        wd=a[y]; a[y]=a[x]; a[x]=wd;
+        
+        st="";
+        for(i=0;i<c;i++) st=st+" "+a[i];
+        return st;
+    }
+    
+    String piglatin(String wd) //converts a word to piglatin form
+    {
+        wd=wd.toLowerCase();
+        int i,j; String s="";
+        char v[]={'a','e','i','o','u'};
+        int f=-1; //f initialised as -1 to enable flagging at 0th index
+        for(i=0;i<wd.length();i++)
+            for(j=0;j<5;j++)
+                if(wd.charAt(i)==v[j]) {f=i;break;}
+                
+        if(f!=-1) s=wd.substring(f)+ wd.substring(0,f)+"ay";
+        else s=wd;
+        
+        return s;
+    }
+    
+    void main()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a sentence: ");
+        String s= sc.nextLine();
+        System.out.println("Original String is: \n"+s);
+        s=interchange(s);
+        StringTokenizer st= new StringTokenizer(s);
+        String wd=""; s="";
+        while(st.hasMoreTokens()){
+            wd=st.nextToken(); 
+            s= s+" "+ piglatin(wd);
+        }
+        System.out.println("String after interchanging and converting to piglatin: \n"+s);
+    }
+}
